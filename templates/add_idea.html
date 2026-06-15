@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}投稿 — 老師密碼{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-eyebrow">社群投稿</div>
+    <div class="page-title">投稿新語錄</div>
+</div>
+
+<div class="card">
+    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.7;">
+        你有更精準的翻譯嗎？填寫後送交「歐陽建泓隊」審核，通過後就會正式加入資料庫！
+    </p>
+
+    <form method="POST" action="{{ url_for('add_idea') }}">
+        <div class="form-group">
+            <label class="form-label">老師說的話</label>
+            <input 
+                type="text" 
+                name="teacher_text" 
+                class="form-input" 
+                placeholder="老師原話..."
+                value="{{ pre_teacher }}"
+                required
+            >
+        </div>
+        <div class="form-group">
+            <label class="form-label">潛台詞（真正的意思）</label>
+            <textarea 
+                name="subtext" 
+                class="form-textarea" 
+                placeholder="其實老師是在說..."
+                required
+            >{{ pre_subtext }}</textarea>
+        </div>
+        <div style="display:flex;gap:0.75rem;align-items:center;">
+            <button type="submit" class="btn btn-orange">✏️ 提交投稿</button>
+            <a href="{{ url_for('main_menu') }}" class="btn btn-ghost">取消</a>
+        </div>
+    </form>
+</div>
+
+<div class="card" style="background:linear-gradient(135deg,#FEF9E7,#FFFDF8);border-color:#F0D060;">
+    <div style="font-size:0.8rem;font-weight:700;color:#8B6914;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">投稿須知</div>
+    <ul style="font-size:0.85rem;color:#6B5B14;line-height:1.9;padding-left:1.25rem;">
+        <li>投稿會進入待審核狀態，由管理員審核</li>
+        <li>通過後才會正式出現在翻譯資料庫</li>
+        <li>每被採納一條創意，可獲得相應成就</li>
+        <li>請勿投稿不恰當或惡意內容</li>
+    </ul>
+</div>
+{% endblock %}

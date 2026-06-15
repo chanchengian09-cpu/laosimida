@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}管理員面板 — 老師密碼{% endblock %}
+
+{% block extra_style %}
+<style>
+.pending-item {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 0.85rem;
+    background: white;
+}
+.pending-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.pending-teacher { font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+.pending-translation { font-size: 0.9rem; color: #3D6B3D; margin-bottom: 0.75rem; }
+.pending-arrow { color: var(--chalk-orange); margin: 0 0.3rem; }
+.action-row { display: flex; gap: 0.6rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-eyebrow">⚙️ 管理員專區</div>
+    <div class="page-title">待審核投稿</div>
+</div>
+
+{% if pendings %}
+<div style="margin-bottom:0.75rem;font-size:0.85rem;color:var(--text-muted);">
+    共 {{ pendings|length }} 筆待審核
+</div>
+
+{% for idea in pendings %}
+<div class="pending-item">
+    <div class="pending-meta">
+        <span>ID: {{ idea[0] }}</span>
+        <span>投稿者: <strong>{{ idea[1] }}</strong></span>
+        <span>{{ idea[6] }}</span>
+    </div>
+    <div class="pending-teacher">{{ idea[2] }}</div>
+    <div class="pending-translation"><span class="pending-arrow">→</span> {{ idea[3] }}</div>
+    <div class="action-row">
+        <a href="{{ url_for('review_idea', idea_id=idea[0], action='approve') }}" 
+           class="btn btn-primary btn-sm">✅ 採納</a>
+        <a href="{{ url_for('review_idea', idea_id=idea[0], action='reject') }}" 
+           class="btn btn-danger btn-sm">❌ 駁回</a>
+    </div>
+</div>
+{% endfor %}
+
+{% else %}
+<div class="card" style="text-align:center;padding:3rem;">
+    <div style="font-size:3rem;margin-bottom:0.75rem;">📭</div>
+    <div style="font-weight:700;margin-bottom:0.3rem;">目前沒有待審核的投稿</div>
+    <div style="font-size:0.85rem;color:var(--text-muted);">所有投稿都已處理完畢</div>
+</div>
+{% endif %}
+
+<a href="{{ url_for('main_menu') }}" class="btn btn-ghost btn-sm" style="margin-top:0.5rem;">← 返回主選單</a>
+{% endblock %}

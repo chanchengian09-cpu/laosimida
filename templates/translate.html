@@ -1,0 +1,28 @@
+{% if result %}
+<div class="translation-result-box" style="background-color: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px;">
+    <h5 style="color: #666;">🔍 解密結果：</h5>
+    <p><strong>原文：</strong> {{ result.original }}</p>
+    <p style="font-size: 1.25rem; color: #d9534f;"><strong>💡 潛台詞：</strong> 「{{ result.translated }}」</p>
+    
+    <div style="margin-top: 15px;">
+        <a href="{{ url_for('vote', sentence_id=sentence_id, is_agree='True') }}" class="btn btn-sm btn-success">👍 這很精準</a>
+        <a href="{{ url_for('vote', sentence_id=sentence_id, is_agree='False') }}" class="btn btn-sm btn-outline-danger">👎 瞎扯，才不是這樣</a>
+    </div>
+</div>
+
+{% if comfort_sentence %}
+<div class="comfort-card" style="background: linear-gradient(135deg, #FFF8E7 0%, #FFEBCD 100%); border-left: 6px solid #FFC107; border-radius: 8px; padding: 20px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <span style="font-size: 1.4rem; margin-right: 8px;">🌱</span>
+        <h6 style="color: #8B8000; font-weight: bold; margin: 0; letter-spacing: 1px;">老斯密碼 · 暖心觀點</h6>
+    </div>
+    <p style="font-size: 1.1rem; color: #333; line-height: 1.6; font-style: italic; margin-bottom: 10px;">
+        「 {{ comfort_sentence.content }} 」
+    </p>
+    <div style="text-align: right; color: #777; font-size: 0.9rem;">
+        —— 來自：<span style="background-color: #f0f0f0; padding: 2px 8px; border-radius: 12px;">{{ comfort_sentence.author }}</span>
+    </div>
+</div>
+{% endif %}
+
+{% endif %}

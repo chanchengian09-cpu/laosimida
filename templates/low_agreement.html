@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}低認同度語錄 — 老師密碼{% endblock %}
+
+{% block extra_style %}
+<style>
+.row-item {
+    padding: 1.1rem 0;
+    border-bottom: 1px dashed var(--border);
+}
+.row-item:last-child { border-bottom: none; }
+.row-original { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.row-translated { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+.row-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+}
+.stat-agree { color: #1E7E4A; }
+.stat-disagree { color: #922B21; }
+.stat-rate { color: var(--text-muted); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-eyebrow">待優化語錄</div>
+    <div class="page-title">低認同度語錄</div>
+</div>
+
+<div class="card">
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+        以下語錄總票數超過 5 票，但認同率低於 50%，需要社群協助優化。
+    </p>
+
+    {% if rows %}
+        {% for row in rows %}
+        <div class="row-item">
+            <div class="row-original">{{ row[1] }}</div>
+            <div class="row-translated">→ {{ row[2] }}</div>
+            <div class="row-stats">
+                <span class="stat-agree">👍 {{ row[3] }}</span>
+                <span class="stat-disagree">👎 {{ row[4] }}</span>
+                {% set total = row[3] + row[4] %}
+                {% if total > 0 %}
+                <span class="stat-rate">認同率 {{ "%.0f"|format(row[3] / total * 100) }}%</span>
+                {% endif %}
+                <a href="{{ url_for('vote', sentence_id=row[0], is_agree='True') }}" 
+                   class="btn btn-ghost btn-sm" style="margin-left:auto;">投票</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div style="text-align:center;padding:2rem;color:var(--text-muted);">
+        <div style="font-size:2.5rem;margin-bottom:0.75rem;">✅</div>
+        <div style="font-weight:700;margin-bottom:0.3rem;">目前沒有低認同度語錄</div>
+        <div style="font-size:0.85rem;">所有語錄的翻譯品質都很好！</div>
+    </div>
+    {% endif %}
+</div>
+
+<a href="{{ url_for('main_menu') }}" class="btn btn-ghost btn-sm">← 返回主選單</a>
+{% endblock %}

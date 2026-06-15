@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>老斯密碼 - 金句模擬器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body { background-color: {{ bg_color }}; min-height: 100vh; display: flex; align-items: center; }
+        .gold-card { background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 40px; }
+    </style>
+</head>
+<body>
+<div class="container text-center" style="max-width: 600px;">
+    <div class="gold-card">
+        <h2 class="text-warning fw-bold mb-4">✨ 老斯密碼金句模擬器 ✨</h2>
+        
+        {% if selected_sentence %}
+            <div class="p-4 my-4 rounded" style="background-color: #FFF8E7; border-left: 6px solid #FFC107;">
+                <h4 class="lh-base fw-bold text-dark">「 {{ selected_sentence.content }} 」</h4>
+                <div class="text-end text-muted mt-3 fs-6">
+                    —— 來自：{{ selected_sentence.author }} <span class="badge bg-secondary ms-1">{{ selected_sentence.category }}</span>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-light py-5 text-muted border my-4">
+                按下方的紅色按鈕，即刻獲得對抗「延遲下課」的暖心力量！
+            </div>
+        {% endif %}
+
+        <form method="POST" class="d-grid gap-3">
+            <button type="submit" name="action" value="warm_me" class="btn btn-danger btn-lg py-3 fw-bold shadow">
+                🚨 救命！老師又要延遲下課 10 分鐘了！
+            </button>
+            <button type="submit" name="action" value="random" class="btn btn-outline-warning">
+                🎲 隨機來一句普通老斯金句
+            </button>
+        </form>
+
+        <div class="mt-4 pt-2">
+            <a href="{{ url_for('main_menu') }}" class="btn btn-secondary btn-sm">返回主選單</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

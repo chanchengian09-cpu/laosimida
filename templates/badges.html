@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}我的徽章 — 老師密碼{% endblock %}
+
+{% block extra_style %}
+<style>
+.badge-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px dashed var(--border);
+}
+.badge-item:last-child { border-bottom: none; }
+.badge-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--board-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+.badge-name { font-weight: 700; font-size: 0.95rem; }
+.badge-empty {
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-eyebrow">成就系統</div>
+    <div class="page-title">{{ current_user }} 的徽章</div>
+</div>
+
+<div class="card">
+    {% set has_real_badge = badges | select('ne', '目前無徽章，繼續加油！') | select('ne', '尚未有任何記錄') | list %}
+    {% if has_real_badge %}
+        {% for badge in badges %}
+        {% if badge not in ['目前無徽章，繼續加油！', '尚未有任何記錄'] %}
+        <div class="badge-item">
+            <div class="badge-icon">
+                {% if '大師' in badge %}🏆
+                {% elif '熟能生巧' in badge %}⭐
+                {% elif '初露鋒芒' in badge %}🌱
+                {% elif '靈感' in badge %}💡
+                {% else %}🎖️{% endif %}
+            </div>
+            <div>
+                <div class="badge-name">{{ badge }}</div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="badge-empty">
+        <div style="font-size:3rem;margin-bottom:0.75rem;">🤍</div>
+        <div style="font-weight:700;margin-bottom:0.4rem;">尚未解鎖任何徽章</div>
+        <div>多翻譯、多投稿，就能獲得成就！</div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card">
+    <div class="page-eyebrow">所有可解鎖徽章</div>
+    <div style="margin-top:0.75rem;">
+        {% set all_badges = [
+            ('🌱', '初露鋒芒', '翻譯滿 10 句'),
+            ('⭐', '熟能生巧', '翻譯滿 30 句'),
+            ('🏆', '潛台詞大師', '翻譯滿 100 句'),
+            ('💡', '靈感迸發', '被採納 5 條創意'),
+        ] %}
+        {% for icon, name, desc in all_badges %}
+        <div class="badge-item">
+            <div class="badge-icon" style="background:var(--bg-page);">{{ icon }}</div>
+            <div>
+                <div class="badge-name">{{ name }}</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">{{ desc }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<a href="{{ url_for('main_menu') }}" class="btn btn-ghost btn-sm">← 返回主選單</a>
+{% endblock %}
