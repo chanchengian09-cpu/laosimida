@@ -2,60 +2,41 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>「老」斯密碼翻譯系統</title>
+    <title>「老」斯密碼翻譯系統 - 歐陽組</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
-        body { background-color: #f4f7f6; font-family: 'Helvetica Neue', Arial, sans-serif; }
-        /* 報告專屬黑板風頂部 */
-        .blackboard-header {
-            background-color: #1e352f;
-            color: #f8f9fa;
-            border-bottom: 8px solid #5d4037;
-            padding: 30px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            margin-bottom: 30px;
+        body { background-color: #f4f6f8; font-family: 'Microsoft JhengHei', sans-serif; }
+        /* 嚴格對照 PDF 報告：深綠色復古黑板頂部 */
+        .blackboard-banner {
+            background-color: #1b3622; color: #ffffff;
+            border-bottom: 10px solid #6d4c41; padding: 35px 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15); margin-bottom: 30px;
         }
-        .chalk-text { text-shadow: 1px 1px 2px rgba(255,255,255,0.3); font-weight: bold; }
-        /* 卡片精美樣式 */
-        .feature-card {
-            background: white;
-            border-radius: 16px;
-            border: none;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-            padding: 25px;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-        }
-        /* 報告指定的藍綠色按鈕調性 */
-        .btn-custom-teal { background-color: #20c997; color: white; font-weight: bold; }
-        .btn-custom-teal:hover { background-color: #1aa179; color: white; }
-        /* 暖心觀點卡片 */
-        .comfort-zone {
-            background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
-            border-left: 6px solid #fab005;
-            border-radius: 12px;
-            padding: 20px;
-        }
+        .chalk-title { font-size: 2.8rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(255,255,255,0.2); }
+        .glass-card { background: #ffffff; border-radius: 16px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.04); padding: 28px; margin-bottom: 25px; }
+        .btn-teal { background-color: #1abc9c; color: white; font-weight: bold; border-radius: 8px; }
+        .btn-teal:hover { background-color: #16a085; color: white; }
+        .btn-dark-board { background-color: #2c3e50; color: white; font-weight: bold; }
+        .gold-comfort-box { background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%); border-left: 8px solid #fbc02d; border-radius: 12px; padding: 22px; }
     </style>
 </head>
 <body>
 
-<div class="blackboard-header text-center">
-    <h1 class="chalk-text">🔑 「老」斯密碼翻譯系統 🔑</h1>
-    <p class="mb-0 opacity-75">開發團隊：高二甲歐陽組 (梁倩樺 · 陳晴欣 · 歐陽建泓)</p>
+<div class="blackboard-banner text-center">
+    <h1 class="chalk-title">🔑 「老」斯密碼翻譯系統</h1>
+    <p class="mt-2 text-white-50 fs-5">開發團隊：高二甲歐陽組（梁倩樺 · 陳晴欣 · 歐陽建泓）</p>
     
-    <div class="container mt-3" style="max-width: 500px;">
-        <div class="row g-2 text-dark">
+    <div class="container mt-4" style="max-width: 550px;">
+        <div class="row g-3 text-dark">
             <div class="col-6">
-                <div class="bg-white rounded p-2 text-center shadow-sm">
-                    <small class="text-muted d-block">個人解密次數</small>
+                <div class="bg-white rounded shadow-sm p-2 text-center">
+                    <span class="text-muted small d-block">📊 個人解密統計</span>
                     <strong class="fs-5 text-success">{{ personal_count }} 次</strong>
                 </div>
             </div>
             <div class="col-6">
-                <div class="bg-white rounded p-2 text-center shadow-sm">
-                    <small class="text-muted d-block">全服總解密量</small>
+                <div class="bg-white rounded shadow-sm p-2 text-center">
+                    <span class="text-muted small d-block">🌐 全服總解密量</span>
                     <strong class="fs-5 text-primary">{{ total_count }} 次</strong>
                 </div>
             </div>
@@ -63,12 +44,12 @@
     </div>
 </div>
 
-<div class="container" style="max-width: 1100px;">
-    
+<div class="container" style="max-width: 1150px;">
+
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show" role="alert">
+                <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show shadow-sm" role="alert">
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -78,40 +59,40 @@
 
     <div class="row">
         <div class="col-md-7">
-            <div class="feature-card">
-                <h4 class="fw-bold mb-3" style="color: #1e352f;">🔄 密碼雙向解密區</h4>
+            <div class="glass-card">
+                <h4 class="fw-bold mb-3 text-dark" style="border-bottom: 2px solid #eee; padding-bottom: 10px;">🔄 密碼雙向檢索解密</h4>
                 
                 <div class="btn-group w-100 mb-4 shadow-sm" role="group">
-                    <a href="?mode=teacher_to_subtext" class="btn {% if mode == 'teacher_to_subtext' %}btn-dark{% else %}btn-outline-dark{% endif %} py-2">
+                    <a href="?mode=teacher_to_subtext" class="btn {% if mode == 'teacher_to_subtext' %}btn-dark-board{% else %}btn-outline-secondary{% endif %} py-2">
                         🗣️ 功能 1：老師的話 ➔ 潛台詞
                     </a>
-                    <a href="?mode=subtext_to_teacher" class="btn {% if mode == 'subtext_to_teacher' %}btn-dark{% else %}btn-outline-dark{% endif %} py-2">
+                    <a href="?mode=subtext_to_teacher" class="btn {% if mode == 'subtext_to_teacher' %}btn-dark-board{% else %}btn-outline-secondary{% endif %} py-2">
                         💭 功能 2：潛台詞 ➔ 老師的話
                     </a>
                 </div>
 
                 <form method="POST">
-                    <input type="hidden" name="action" value="translate">
+                    <input type="hidden" name="form_action" value="translate">
                     <div class="mb-3">
                         <label class="form-label fw-bold text-secondary">
-                            {% if mode == 'teacher_to_subtext' %}請輸入老師說的話：{% else %}請輸入你想查的真實潛台詞：{% endif %}
+                            {% if mode == 'teacher_to_subtext' %}請輸入老師說的話 (例如：兩分鐘)：{% else %}請輸入你想反查的潛台詞：{% endif %}
                         </label>
-                        <input type="text" name="text_input" class="form-control form-control-lg border-2" value="{{ text_input }}" placeholder="輸入關鍵字 (例如: 兩分鐘、下課...)" required>
+                        <input type="text" name="text_input" class="form-control form-control-lg border-2" value="{{ text_input }}" placeholder="請輸入關鍵字搜尋..." required>
                     </div>
-                    <button type="submit" class="btn btn-custom-teal w-100 btn-lg shadow-sm">解密真實弦外之音</button>
+                    <button type="submit" class="btn btn-teal w-100 btn-lg shadow-sm">解密真實含意</button>
                 </form>
 
                 {% if result %}
-                <div class="mt-4 p-3 bg-light rounded border-start border-4 border-success">
-                    <h5 class="fw-bold text-success">🔍 破解成功：</h5>
-                    <p class="text-muted mb-2"><strong>原文查詢：</strong> {{ result.original }}</p>
-                    <p class="fs-4 text-danger fw-bold mb-3"><strong>真實含意：</strong> 「{{ result.translated }}」</p>
+                <div class="mt-4 p-4 rounded bg-light border-start border-5 border-success">
+                    <h5 class="fw-bold text-success mb-3">🔍 破解成功：</h5>
+                    <p class="mb-2"><strong>查詢原文：</strong> {{ result.original }}</p>
+                    <p class="fs-4 text-danger fw-bold mb-3"><strong>解密含意：</strong> 「{{ result.translated }}」</p>
+                    <hr style="border-top: 1px dashed #ccc;">
                     
-                    <hr>
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="text-muted small">功能 3 認同評分：</span>
-                        <a href="{{ url_for('vote', sentence_id=sentence_id, is_agree='True') }}" class="btn btn-sm btn-success">👍 這很精準</a>
-                        <a href="{{ url_for('vote', sentence_id=sentence_id, is_agree='False') }}" class="btn btn-sm btn-outline-danger">👎 瞎扯，才不是這樣</a>
+                    <div class="d-flex align-items-center gap-2 mt-2">
+                        <span class="text-muted fw-bold small">【功能 3】精準度評分：</span>
+                        <a href="{{ url_for('vote', sentence_id=sentence_id, is_agree='True') }}" class="btn btn-sm btn-success px-3">👍 這很精準</a>
+                        <a href="{{ url_for('vote', sentence_id=sentence_id, is_agree='False') }}" class="btn btn-sm btn-outline-danger px-3">👎 才不是這樣</a>
                     </div>
                 </div>
                 {% endif %}
@@ -119,28 +100,28 @@
         </div>
 
         <div class="col-md-5">
-            <div class="feature-card">
-                <h4 class="fw-bold mb-3" style="color: #b78a00;">✨ 功能 4：老斯密碼暖心發射器</h4>
-                <p class="text-muted small">當你在左側解密出老師令人無奈的話語時，下方將自動為高二的你調用金句庫，進行心靈療癒！</p>
+            <div class="glass-card" style="height: 94%;">
+                <h4 class="fw-bold mb-3" style="color: #b78a00; border-bottom: 2px solid #eee; padding-bottom: 10px;">✨ 功能 4：老斯密碼暖心發射器</h4>
+                <p class="text-muted small">在左側查詢出老師令人 emo 的表面話後，系統會自動在下方幫你們加載金句，進行心靈療癒！</p>
                 
                 {% if comfort_sentence %}
-                <div class="comfort-zone shadow-sm animate__animated animate__fadeIn">
+                <div class="gold-comfort-box shadow-sm mt-4">
                     <div class="d-flex align-items-center mb-2">
                         <span class="fs-4 me-2">🌱</span>
-                        <strong style="color: #856404;">老斯密碼 · 暖心觀點</strong>
+                        <strong style="color: #7f6000; font-size: 1.1rem;">老斯密碼 · 暖心雞湯</strong>
                     </div>
-                    <p class="fs-5 fw-bold text-dark lh-base" style="font-style: italic;">
+                    <p class="fs-5 text-dark lh-base font-monospace" style="font-style: italic; font-weight: 500;">
                         「 {{ comfort_sentence.content }} 」
                     </p>
-                    <div class="text-end text-secondary small font-weight-bold">
-                        —— 來自：<span class="badge bg-warning text-dark">{{ comfort_sentence.author }}</span>
+                    <div class="text-end text-secondary small mt-3">
+                        —— 來自：<span class="badge bg-warning text-dark fs-6">{{ comfort_sentence.author }}</span>
                     </div>
                 </div>
                 {% else %}
-                    <div class="text-center py-5 text-muted border rounded bg-light" style="border-style: dashed !important;">
-                        <p class="mb-0">🔮 在左邊輸入關鍵字並點擊「解密」</p>
-                        <small>系統會聯動生成一句抗emo金句安慰你！</small>
-                    </div>
+                <div class="text-center py-5 text-muted border rounded bg-light mt-4" style="border-style: dashed !important; border-width: 2px !important;">
+                    <p class="mb-1 fs-5">🔮 等待左側解密聯動...</p>
+                    <small>解密出結果後，正能量金句會自動在此彈出！</small>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -148,30 +129,30 @@
 
     <div class="row mt-2">
         <div class="col-12">
-            <div class="feature-card">
-                <h4 class="fw-bold mb-3" style="color: #2b6cb0;">💡 功能 5：貢獻師弟師妹 —— 投稿新創意</h4>
-                <p class="text-muted small">發現了我們學校哪位老師的新名言？填寫在下方提交給管理員，讓系統資料庫越來越強大！</p>
+            <div class="glass-card">
+                <h4 class="fw-bold mb-3 text-primary" style="border-bottom: 2px solid #eee; padding-bottom: 10px;">💡 功能 5：投稿新創意表單</h4>
+                <p class="text-muted small">提交老師的新弦外之音，豐富資料庫：</p>
                 
                 <form method="POST">
-                    <input type="hidden" name="action" value="add_idea">
+                    <input type="hidden" name="form_action" value="add_idea">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">老師說的話 (表面話)</label>
-                            <input type="text" name="teacher_text" class="form-control border-2" placeholder="例如：這題看過就好，不考" required>
+                            <label class="form-label fw-bold text-dark">老師說的話 (表面話) <span class="text-danger">*</span></label>
+                            <input type="text" name="teacher_sentence" class="form-control border-2 py-2" placeholder="例如：我就佔用大家兩分鐘" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">真正的潛台詞 (內心戲)</label>
-                            <input type="text" name="subtext" class="form-control border-2" placeholder="例如：期末考必考，看誰沒聽" required>
+                            <label class="form-label fw-bold text-dark">真實潛台詞 (內心戲) <span class="text-danger">*</span></label>
+                            <input type="text" name="translation" class="form-control border-2 py-2" placeholder="例如：這堂課我要拖到下堂課鐘響" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary px-5 shadow-sm">送出新創意審核</button>
+                    <button type="submit" class="btn btn-primary px-5 btn-lg mt-2 shadow-sm">提交新創意審核</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="text-center my-4 opacity-50">
-        <p>目前登入帳號：<strong>{{ current_user }}</strong> | <a href="{{ url_for('logout') }}" class="text-danger text-decoration-none">登出系統</a></p>
+    <div class="text-center my-4 opacity-50 small">
+        <p>當前帳號：<strong>{{ current_user }}</strong> | <a href="{{ url_for('logout') }}" class="text-danger text-decoration-none fw-bold">安全登出</a></p>
     </div>
 
 </div>
