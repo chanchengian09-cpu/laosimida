@@ -1,142 +1,44 @@
-{% extends "base.html" %}
-{% block title %}登入 — 老師密碼{% endblock %}
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>「老」斯密碼 - 登入系統</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body { background: #e6f3ff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 450px; text-align: center; border-top: 10px solid #1b3622; }
+        .btn-teal { background-color: #1abc9c; color: white; font-weight: bold; width: 100%; padding: 12px; border-radius: 10px; margin-top: 10px; }
+        .btn-teal:hover { background-color: #16a085; color: white; }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <h2 class="fw-bold mb-2" style="color: #1b3622;">🔑 「老」斯密碼</h2>
+    <p class="text-muted mb-4">老師語言翻譯系統 · 請登入開始解密</p>
 
-{% block extra_style %}
-<style>
-.login-wrap {
-    min-height: calc(100vh - 60px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -2.5rem;
-}
-.login-box {
-    width: 100%;
-    max-width: 420px;
-}
-.blackboard {
-    background: var(--board-dark);
-    border-radius: 16px;
-    padding: 2.5rem 2.5rem 2rem;
-    box-shadow: 
-        0 0 0 8px #4A3728,
-        0 8px 40px rgba(0,0,0,0.35);
-    margin-bottom: 1.25rem;
-    position: relative;
-    overflow: hidden;
-}
-.blackboard::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg, transparent, transparent 31px,
-        rgba(255,255,255,0.03) 31px, rgba(255,255,255,0.03) 32px
-    );
-}
-.board-title {
-    font-family: 'Caveat', cursive;
-    font-size: 2.8rem;
-    color: var(--chalk-white);
-    text-align: center;
-    margin-bottom: 0.2rem;
-    position: relative;
-    text-shadow: 0 0 20px rgba(245,240,232,0.15);
-}
-.board-title span { color: var(--chalk-orange); }
-.board-subtitle {
-    text-align: center;
-    color: rgba(245,240,232,0.5);
-    font-size: 0.85rem;
-    margin-bottom: 2rem;
-    position: relative;
-}
-.chalk-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid rgba(245,240,232,0.3);
-    color: var(--chalk-white);
-    font-size: 1rem;
-    font-family: 'Noto Sans TC', sans-serif;
-    padding: 0.6rem 0;
-    outline: none;
-    transition: border-color 0.2s;
-    margin-bottom: 0.5rem;
-    position: relative;
-}
-.chalk-input::placeholder { color: rgba(245,240,232,0.3); }
-.chalk-input:focus { border-bottom-color: var(--chalk-orange); }
-.chalk-label {
-    display: block;
-    color: rgba(245,240,232,0.55);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-    position: relative;
-}
-.chalk-hint {
-    font-size: 0.78rem;
-    color: rgba(245,240,232,0.3);
-    margin-bottom: 1.75rem;
-    position: relative;
-}
-.btn-chalk {
-    width: 100%;
-    background: var(--chalk-orange);
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: 'Noto Sans TC', sans-serif;
-    cursor: pointer;
-    transition: all 0.15s;
-    position: relative;
-}
-.btn-chalk:hover { background: #d46e38; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(232,130,74,0.4); }
-.guest-note {
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-</style>
-{% endblock %}
-
-{% block content %}
-<div class="login-wrap">
-    <div class="login-box">
-        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-        <div class="flash-container">
             {% for category, message in messages %}
-            <div class="flash flash-{{ category }}">{{ message }}</div>
+                <div class="alert alert-{{ category }} py-2 small">{{ message }}</div>
             {% endfor %}
-        </div>
         {% endif %}
-        {% endwith %}
+    {% endwith %}
 
-        <div class="blackboard">
-            <div class="board-title">老師<span>密碼</span></div>
-            <div class="board-subtitle">解碼老師語錄的潛台詞</div>
-
-            <form method="POST" action="{{ url_for('login') }}">
-                <label class="chalk-label">學號 / 暱稱</label>
-                <input 
-                    type="text" 
-                    name="user_id" 
-                    class="chalk-input" 
-                    placeholder="輸入你的ID，或直接按登入"
-                    autocomplete="off"
-                >
-                <div class="chalk-hint">留空將以 Student_A 身份登入</div>
-                <button type="submit" class="btn-chalk">進教室 →</button>
-            </form>
+    <form method="POST">
+        <div class="mb-3 text-start">
+            <label class="form-label fw-bold">輸入您的帳號 (User ID)：</label>
+            <input type="text" name="username" class="form-control" placeholder="請輸入您的帳號名稱" required>
         </div>
-        <div class="guest-note">管理員請輸入 <strong>iamadmin</strong></div>
+        <div class="mb-4 text-start">
+            <label class="form-label fw-bold">輸入您的密碼 (Password)：</label>
+            <input type="password" name="password" class="form-control" placeholder="請輸入密碼" required>
+        </div>
+        <button type="submit" class="btn btn-teal shadow-sm">安全登入系統</button>
+    </form>
+    
+    <div class="mt-4 pt-3 border-top text-muted small">
+        還沒有帳號嗎？ <a href="{{ url_for('register') }}" class="text-success fw-bold text-decoration-none">點我立即創建帳號 ➔</a>
     </div>
 </div>
-{% endblock %}
+</body>
+</html>
